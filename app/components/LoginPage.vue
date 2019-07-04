@@ -24,6 +24,7 @@
 				</StackLayout>
 
 				<Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" @tap="submit" class="btn btn-primary m-t-20" />
+                <Button text="Login with Facebook" @tap="loginFacebook" class="btn btn-primary m-t-20" />
 				<Label v-show="isLoggingIn" text="Forgot your password?" class="login-label" @tap="forgotPassword" />
 			</StackLayout>
 
@@ -61,7 +62,26 @@ const userService = {
     return await firebase.resetPassword({
       email: email
     });
-  }
+  },
+  async loginFacebook(user) {
+    await firebase
+      .login({
+        type: firebase.LoginType.FACEBOOK,
+        facebookOptions: {
+          // full list: https://developers.facebook.com/docs/facebook-login/permissions/
+          scope: ["public_profile", "email"] // optional: defaults to ['public_profile', 'email']
+        }
+      })
+      .then(result => {
+        //console.log("Returned from firebase with result");
+        //console.dir(result);
+        return Promise.resolve(JSON.stringify(result));
+      })
+      .catch(error => {
+        console.error(error);
+        return Promise.reject(error);
+      });
+  },
 };
 
 // A stub for the main page of your app. In a real app you’d put this page in its own .vue file.
@@ -173,6 +193,20 @@ export default {
             });
         }
       });
+    },
+    loginFacebook() {
+      //loader.show();//Don't use this for facebook logins, as the indicator covers the UI on IOS
+      userService
+        .loginFacebook(this.user)
+        .then(() => {
+          //loader.hide();
+          this.$navigateTo(HomePage);
+        })
+        .catch((err) => {
+          //loader.hide();
+          console.error(err);
+          this.alert(err)
+        });
     },
     focusPassword() {
       this.$refs.password.nativeView.focus();
