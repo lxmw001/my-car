@@ -24,7 +24,7 @@
 				</StackLayout>
 
 				<Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" @tap="submit" class="btn btn-primary m-t-20" />
-                <Button text="Login with Facebook" @tap="loginFacebook" class="btn btn-primary m-t-20" />
+                <Button v-show="isLoggingIn" :text="'\uf09a' +' Facebook login'" @tap="loginFacebook" class="fab btn btn-active" />
 				<Label v-show="isLoggingIn" text="Forgot your password?" class="login-label" @tap="forgotPassword" />
 			</StackLayout>
 
