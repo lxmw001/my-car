@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "655039672484-bqd3vtmfq5pkg2d3ao90hcrssp9e4n9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lx.mw.my.car",
+            "certificate_hash": "4d4c97efff17fb9600b1497ca6215fb63c184077"
+          }
+        },
+        {
           "client_id": "655039672484-fdif3ca8olc8hctgi8dcsfkolcelq9cq.apps.googleusercontent.com",
           "client_type": 3
         }

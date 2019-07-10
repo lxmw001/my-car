@@ -25,6 +25,7 @@
 
 				<Button :text="isLoggingIn ? 'Log In' : 'Sign Up'" @tap="submit" class="btn btn-primary m-t-20" />
                 <Button v-show="isLoggingIn" :text="'\uf09a' +' Facebook login'" @tap="loginFacebook" class="fab btn btn-active" />
+                <Button v-show="isLoggingIn" :text="'\uf1a0' +' Google login' " @tap="loginGoogle" class="fab btn btn-active" />
 				<Label v-show="isLoggingIn" text="Forgot your password?" class="login-label" @tap="forgotPassword" />
 			</StackLayout>
 
@@ -41,6 +42,7 @@
 <script>
 // A stub for a service that authenticates users.
 import firebase from "nativescript-plugin-firebase";
+import HomeVue from './Home.vue';
 
 const userService = {
   async register(user) {
@@ -75,6 +77,19 @@ const userService = {
       .then(result => {
         //console.log("Returned from firebase with result");
         //console.dir(result);
+        return Promise.resolve(JSON.stringify(result));
+      })
+      .catch(error => {
+        console.error(error);
+        return Promise.reject(error);
+      });
+  },
+  async loginGoogle(user) {
+     await firebase
+      .login({
+        type: firebase.LoginType.GOOGLE
+      })
+      .then(result => {
         return Promise.resolve(JSON.stringify(result));
       })
       .catch(error => {
@@ -129,7 +144,7 @@ export default {
         .login(this.user)
         .then(() => {
 		  loader.hide();
-		  this.$navigateTo(HomePage);
+		  this.$navigateTo(HomeVue);
         })
         .catch(err => {
           console.error(err);
@@ -206,6 +221,20 @@ export default {
           //loader.hide();
           console.error(err);
           this.alert(err)
+        });
+    },
+    loginGoogle(){
+        //loader.show();//Don't use this for google logins, as the indicator covers the UI on IOS
+        userService
+        .loginGoogle(this.user)
+        .then((result) => {
+          //loader.hide();
+          this.$navigateTo(HomeVue);
+        })
+        .catch((error) => {
+          //loader.hide();
+          console.error(err);
+          this.alert(error)
         });
     },
     focusPassword() {
