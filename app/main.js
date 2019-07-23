@@ -8,9 +8,11 @@ import LoginPage from './components/LoginPage'
 //shared among components
 export const backendService = new BackendService()
 export const authService = new AuthService()
+import store from './store';
 
 Vue.prototype.$authService = authService
 Vue.prototype.$backendService = backendService
+Vue.prototype.$store = store;
 
 if (TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
@@ -42,5 +44,6 @@ firebase
   );
 
 new Vue({
+  store,
   render: h => h('frame', [h(LoginPage)])
 }).$start()

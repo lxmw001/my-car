@@ -37,4 +37,4 @@ const storeConf = {
   mutations,
   actions
 }
-export const store = new Vuex.Store(storeConf)
+export default new Vuex.Store(storeConf)
