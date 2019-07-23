@@ -4135,6 +4135,13 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+nativescript-camera@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/nativescript-camera/-/nativescript-camera-4.5.0.tgz#92260208cb34e1df5760c66ad16725edf6fbfffd"
+  integrity sha512-Ecw9JH0CNgnGKXfqD1oifMoIOSnKBgWkecwVpdKfrChkQaCdKDFWdfdJ6X8+YTSwJH4n43e74JmrPzLN2eitwQ==
+  dependencies:
+    nativescript-permissions "~1.3.0"
+
 nativescript-dev-webpack@0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/nativescript-dev-webpack/-/nativescript-dev-webpack-0.24.1.tgz#f78b67b4ddacac904aa2dc5f0adb8d25e4d0abd8"
@@ -4182,10 +4189,22 @@ nativescript-hook@~0.2.4:
     glob "^6.0.1"
     mkdirp "^0.5.1"
 
+nativescript-imagepicker@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/nativescript-imagepicker/-/nativescript-imagepicker-6.2.0.tgz#4c89d27c1f605f78cafce7cb8fc7ce7b15c09b2b"
+  integrity sha512-irHCcqDdz4+XYJiZDQdWhprHzPsZIocv7st3vtB2/N08IwkpBeya7VqC1VmH1xCmUUnIL8XWGLkLMONoKSlQwg==
+  dependencies:
+    nativescript-permissions "~1.3.0"
+
 nativescript-loading-indicator@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/nativescript-loading-indicator/-/nativescript-loading-indicator-2.5.2.tgz#4498689bc7d5b3085420ea998a382f0540eb642a"
   integrity sha512-BbE1xWlQSoYOZ5xPhczWC+hA/v8gPMy2n32j8QGZyF7Eyoh+IF2iWstgGpyXV+WvgNBvkax6kMRMxoQwoRFKEw==
+
+nativescript-permissions@~1.3.0:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/nativescript-permissions/-/nativescript-permissions-1.3.6.tgz#f79df6b63a3953c0e91ad76713b6c1597677c379"
+  integrity sha512-fkuoboLNdnc3SKdpbffR0Pd84G6iY7GKPirgQLrOFNMP6gLEO8fqJGY1+iFr562sPvlRhCMBjpmauMZuLMwHoQ==
 
 nativescript-plugin-firebase@^9.0.1:
   version "9.0.1"
@@ -6164,6 +6183,11 @@ tns-core-modules@^5.4.2:
   dependencies:
     tns-core-modules-widgets "5.4.2"
     tslib "^1.9.3"
+
+tns-platform-declarations@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/tns-platform-declarations/-/tns-platform-declarations-5.4.3.tgz#59a34c2f40c2503b837c0a22f1ae197252cf3058"
+  integrity sha512-9iREcHjCw26Le6a2Zgx1B0KmHm7OWoMYrilEwBNaDoy+Xf+CB1GynuIwDvlMJMuVcTmxEyo6DZBLOokGioi+3w==
 
 to-array@0.1.4:
   version "0.1.4"

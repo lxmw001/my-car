@@ -1,33 +1,46 @@
 import Vue from 'nativescript-vue'
-import LoginPage from './components/LoginPage'
-import store from './store';
-
 import VueDevtools from 'nativescript-vue-devtools'
+import firebase from "nativescript-plugin-firebase"
+import BackendService from './services/BackendService'
+import AuthService from './services/AuthService'
+import LoginPage from './components/LoginPage'
 
-if(TNS_ENV !== 'production') {
+//shared among components
+export const backendService = new BackendService()
+export const authService = new AuthService()
+
+Vue.prototype.$authService = authService
+Vue.prototype.$backendService = backendService
+
+if (TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
 }
-// Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = (TNS_ENV === 'production')
 
-Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
 
-var firebase = require("nativescript-plugin-firebase");
 firebase
   .init({
-    // Optionally pass in properties for database, authentication and cloud messaging,
-    // see their respective docs.
+    onAuthStateChanged: data => {
+      console.log((data.loggedIn ? "Logged in to firebase" : "Logged out from firebase") + " (firebase.init() onAuthStateChanged callback)");
+      if (data.loggedIn) {
+        backendService.token = data.user.uid
+        console.log("uID: " + data.user.uid)
+        store.commit('setIsLoggedIn', true)
+      }
+      else {
+        store.commit('setIsLoggedIn', false)
+      }
+    }
   })
   .then(
-    function(instance) {
+    function (instance) {
       console.log("firebase.init done");
     },
-    function(error) {
+    function (error) {
       console.log("firebase.init error: " + error);
     }
   );
 
 new Vue({
-  store,
   render: h => h('frame', [h(LoginPage)])
 }).$start()
