@@ -3,10 +3,10 @@
         <StackLayout>
             <GridLayout class="action-bar" rows="*" columns="50,2*,50">
                 <Label col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'"/>
-                <Label col="1" row="0" class="header" text="Change Picture"/>
-            </GridLayout>
+                <Label col="1" row="0" class="header" text="Change Picture"/>               
+            </GridLayout>         
             <Image id="image" :src="pictureSource" class="profile-picture-edit"/>
-            <GridLayout columns="60,52,*" rows="50,10,50">
+            <GridLayout columns="70,62,*" rows="60,10,60">
                 <Label row="0" col="1" id="buttonCamera" :text="'\uf083'" @tap="takePicture" class="fas take-picture-icon "></Label>
                 <Label row="0" col="2" text="Take a picture" class="desc-text"/>
                 <Label row="2" col="1" id="buttonImage" :text="'\uf1c5'" @tap="chooseImage" class="fas take-picture-icon "></Label>
@@ -14,10 +14,10 @@
             </GridLayout>
             <GridLayout  columns="*,*"  >
                 <Button text="Confirm" class="save" @tap="saveProfilePic" col="0"/>
-                <Button text="Cancel" class="cancel" @tap="saveCancelPic" col="1"/>
+                <Button text="Cancel" class="cancel" @tap="saveCancelPic" col="1"/>            
             </GridLayout>
         </StackLayout>
-    </Page>
+    </Page>    
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
@@ -45,10 +45,8 @@ export default {
   computed: {
   },
   mounted() {
-    // this.pictureSource = this.$store.state.profile.profile_pic;
-    // this.origSource = this.$store.state.profile.profile_pic;
-    this.pictureSource = '';
-    this.origSource = '';
+    this.pictureSource = this.$store.state.profile.profile_pic;
+    this.origSource = this.$store.state.profile.profile_pic;
     if (cameraModule.isAvailable()) {
       //checks to make sure device has a camera
     } else {
@@ -60,7 +58,7 @@ export default {
         //have permissions
       },
       failure => {
-        //no permissions for camera,disable picture button?
+        //no permissions for camera,disable picture button?        
       }
     );
   },
@@ -77,20 +75,15 @@ export default {
           //save to file
           imageSourceModule.fromAsset(picture).then(
             savedImage => {
-              console.log("saving to file");
-              // let filename =
-              //   this.$store.state.profile.id +
-              //   "-" +
-              //   new Date().getTime() +
-              //   ".jpg";
-                  let filename =
-               'sdf' +
+              let filename =
+                this.$store.state.profile.id +
                 "-" +
                 new Date().getTime() +
                 ".jpg";
               let folder = knownFolders.documents();
               let fullpath = path.join(folder.path, filename);
               savedImage.saveToFile(fullpath, "jpeg");
+
               //set the picture from the currently saved image path
               this.pictureSource = fullpath;
               this.newFilename = filename;
@@ -149,13 +142,8 @@ export default {
                 let filePath = "";
                 let image = {};
                 const folderPath = knownFolders.documents().path;
-                // let fileName =
-                //   this.$store.state.profile.id +
-                //   "-" +
-                //   new Date().getTime() +
-                //   ".jpg";
-                  let fileName =
-                  'sd' +
+                let fileName =
+                  this.$store.state.profile.id +
                   "-" +
                   new Date().getTime() +
                   ".jpg";
@@ -198,7 +186,6 @@ export default {
                         saved = imageSource.saveToFile(filePath, "jpeg");
 
                         if (saved) {
-                          console.log("saved picture to " + filePath);
                           this.pictureSource = filePath;
                         } else {
                           console.log(
@@ -217,6 +204,7 @@ export default {
               });
           })
           .catch(err => {
+            //alert(err);
             console.log(err);
             loader.hide();
           });

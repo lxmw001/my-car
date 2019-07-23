@@ -3,7 +3,7 @@ import { getString, setString } from 'tns-core-modules/application-settings'
 const tokenKey = "token";
 
 export default class BackendService {
-
+  
   isLoggedIn() {
     return !!getString(tokenKey);
   }
@@ -15,4 +15,6 @@ export default class BackendService {
   set token(newToken) {
     setString(tokenKey, newToken);
   }
+
+  
 }

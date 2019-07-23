@@ -24,7 +24,6 @@
               />
               <StackLayout class="hr-light" />
             </StackLayout>
-
             <StackLayout v-show="isInitialized" class="input-field" marginBottom="25">
               <TextField
                 ref="password"
@@ -38,7 +37,6 @@
               />
               <StackLayout class="hr-light" />
             </StackLayout>
-
             <StackLayout v-show="(isInitialized && !isLoggingIn)" class="input-field">
               <TextField
                 ref="confirmPassword"
@@ -51,9 +49,8 @@
               />
               <StackLayout class="hr-light" />
             </StackLayout>
-
             <Button
-              v-show="(isLoggingIn && isInitialized)"
+              v-show="(isInitialized)"
               :text="isLoggingIn ? 'Log In' : 'Sign Up'"
               @tap="submit"
               class="btn btn-primary m-t-20"
@@ -77,7 +74,6 @@
               @tap="forgotPassword"
             />
           </StackLayout>
-
           <Label v-show="isInitialized" class="login-label sign-up-label" @tap="toggleForm">
             <FormattedString>
               <Span :text="isLoggingIn ? 'Don’t have an account? ' : 'Back to Login'" />
@@ -89,53 +85,18 @@
     </ScrollView>
   </Page>
 </template>
-
 <script>
-// A stub for a service that authenticates users.
-import { mapState } from "vuex";
-import firebase from "nativescript-plugin-firebase";
 import { isAndroid, isIOS } from "tns-core-modules/platform";
-import HomeVue from "./Home.vue";
+import firebase from "nativescript-plugin-firebase";
+import { mapState } from "vuex";
 import DashboardPage from "./DashboardPage.vue";
-// const timerModule = require("tns-core-modules/timer");
-
-// A stub for the main page of your app. In a real app you’d put this page in its own .vue file.
-const HomePage = {
-  template: `
-<Page>
-	<Label class="m-20" textWrap="true" text="You have successfully authenticated. This is where you build your core application functionality."></Label>
-</Page>
-`
-};
+import LoginPage from "./LoginPage.vue";
 
 var LoadingIndicator = require("nativescript-loading-indicator")
   .LoadingIndicator;
 var loader = new LoadingIndicator();
 
 export default {
-  computed: {
-    ...mapState(["isLoggedIn"])
-  },
-  watch: {
-     isLoggedIn(val) {
-      if (!val) {
-        this.isInitialized = true;
-      }else{
-        this.$store.dispatch("fetchProfile");
-      }
-    },
-    profile(val) {
-      if (!val) {
-      }else{
-        this.$navigateTo(DashboardPage, { clearHistory: true });
-      }
-    }
-  },
-  created() {
-    // if (this.$store.state.isLoggedIn != null) {
-      this.isInitialized = true;
-    // }
-  },
   data() {
     return {
       isLoggingIn: true,
@@ -147,9 +108,39 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(["isLoggedIn", "profile"])
+  },
+  created() {
+    if (this.$store.state.isLoggedIn != null) {
+      this.isInitialized = true;
+    }
+  },
+  watch: {
+    isLoggedIn(val) {
+      console.log("TCL: isLoggedIn -> val", val)
+      if (!val) {
+        this.isInitialized = true;
+      } else {
+        this.$store.dispatch("fetchProfile");
+      }
+    },
+    profile(val) {
+      if (!val) {
+      } else {
+        this.$navigateTo(DashboardPage, { clearHistory: true });
+      }
+    }
+  },
   methods: {
     toggleForm() {
       this.isLoggingIn = !this.isLoggingIn;
+    },
+    getClass() {
+      return {
+        "container-loading": this.isInitialized,
+        "container-loaded": !this.isInitialized
+      };
     },
     submit() {
       if (!this.user.email || !this.user.password) {
@@ -168,7 +159,6 @@ export default {
         .login(this.user)
         .then(() => {
           loader.hide();
-          // this.$navigateTo(DashboardPage);
           this.$store.commit("setIsLoggedIn", true);
         })
         .catch(err => {
@@ -186,7 +176,6 @@ export default {
         .then(() => {
           //if (isIOS) this.isInitialized = true; //leave this up to avoid weird animation
           if (isAndroid) loader.hide();
-          // this.$navigateTo(DashboardPage);
           this.$store.commit("setIsLoggedIn", true);
         })
         .catch(err => {
@@ -205,7 +194,6 @@ export default {
         .then(result => {
           //if (isIOS) this.isInitialized = true;
           if (isAndroid) loader.hide();
-          // this.$navigateTo(DashboardPage);
           this.$store.commit("setIsLoggedIn", true);
         })
         .catch(error => {
@@ -236,7 +224,6 @@ export default {
         .register(this.user)
         .then(() => {
           loader.hide();
-          this.alert("Your account was successfully created.");
           this.isLoggingIn = true;
         })
         .catch(err => {
@@ -282,16 +269,10 @@ export default {
     },
     alert(message) {
       return alert({
-        title: "My Car",
+        title: "APP NAME",
         okButtonText: "OK",
         message: message
       });
-    },
-    getClass() {
-      return {
-        "container-loading": this.isInitialized,
-        "container-loaded": !this.isInitialized
-      };
     }
   }
 };
@@ -314,19 +295,20 @@ export default {
   margin-bottom: 12;
   height: 90;
   font-weight: bold;
+  horizontal-align: center;
 }
 
 .header {
   horizontal-align: center;
   font-size: 25;
   font-weight: 600;
-  margin-bottom: 70;
+  margin-bottom: 20;
   text-align: center;
-  color: #d51a1a;
+  color: #66a59a;
 }
 
 .input-field {
-  margin-bottom: 25;
+  margin-bottom: 20;
 }
 
 .input {
@@ -346,7 +328,12 @@ export default {
   font-size: 20;
   font-weight: 600;
 }
-
+.loading-label {
+  color: #66a59a;
+  horizontal-align: center;
+  font: 16;
+  /* margin-top: 80;*/
+}
 .login-label {
   horizontal-align: center;
   color: #a8a8a8;
@@ -362,6 +349,7 @@ export default {
 }
 
 .container-loading {
+  /*margin-top: 200;*/
   animation-name: loading;
   animation-fill-mode: forwards;
   animation-duration: 0.6;
@@ -376,6 +364,7 @@ export default {
   }
 }
 .container-loaded {
+  /*margin-top: 200;*/
   animation-name: loaded;
   animation-fill-mode: forwards;
   animation-duration: 0.6;

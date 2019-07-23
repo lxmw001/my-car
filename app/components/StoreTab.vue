@@ -1,18 +1,18 @@
 <template>
-  <StackLayout>
-    <ActionBar text="MyApp" :back="false" />
-    <StackLayout class="form">
-      <Image class="logo" src="~/assets/images/NativeScript-Vue.png" />
-      <Label class="header">Welcome to Global!</Label>
+    <StackLayout>
+        <ActionBar text="MyApp" :back="false"/>
+        <StackLayout class="form">            
+            <Image class="logo" src="~/assets/images/NativeScript-Vue.png" />
+            <Label class="header">Welcome to Store!</Label>            
+        </StackLayout>
     </StackLayout>
-  </StackLayout>
 </template>
 
 <script>
 import ActionBar from "./ActionBar";
 export default {
   name: "local-tab",
-  components: { ActionBar }
+  components: {ActionBar},
 };
 </script>
 <style scoped>

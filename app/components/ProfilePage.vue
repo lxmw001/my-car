@@ -1,96 +1,54 @@
 <template>
-  <Page ref="page" actionBarHidden="true" backgroundSpanUnderStatusBar="true">
-    <StackLayout class="container">
-      <GridLayout class="action-bar" rows="*" columns="50,2*,50">
-        <Label col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'" />
-        <Label col="1" row="0" class="header" text="Profile" />
-      </GridLayout>
-      <GridLayout>
-        <GridLayout class="form-content" rows="auto,*,auto,auto">
-          <StackLayout class="top-border" row="0" />
-          <ScrollView row="1" class="fields-section">
-            <StackLayout>
-              <!-- Username -->
-              <GridLayout ios:columns="auto,*" android:rows="auto, auto" verticalAlignment="top">
-                <Label text="Username" class="field-title" />
-                <TextField
-                  v-bind:class="{ editable: editable }"
-                  id="username"
-                  :editable="editable"
-                  v-model="origprofile.name"
-                  class="field"
-                  ios:col="1"
-                  android:row="1"
-                  tap="onTextInputTapped"
-                />
-              </GridLayout>
-              <StackLayout class="line" />
-              <!-- Profile Pic -->
-              <GridLayout ios:columns="auto,*" android:rows="auto, auto" verticalAlignment="top">
-                <Label text="Profile Pic" class="field-title" />
-                <TextField
-                  v-bind:class="{ editable: editable }"
-                  id="profile_pic"
-                  :editable="editable"
-                  v-model="origprofile.profile_pic"
-                  class="field"
-                  ios:col="1"
-                  android:row="1"
-                  tap="onTextInputTapped"
-                />
-              </GridLayout>
-              <StackLayout class="line" />
-              <!-- Bio -->
-              <StackLayout>
-                <Label text="Bio" class="field-title" />
-                <TextView
-                  v-bind:class="{ editable: editable }"
-                  id="bio"
-                  :editable="editable"
-                  v-model="origprofile.bio"
-                  android:hint="Add bio"
-                  ios:hint="Bio"
-                  class="field-multiline"
-                  tap="onTextInputTapped"
-                />
-              </StackLayout>
-              <StackLayout class="line" />
-            </StackLayout>
-          </ScrollView>
-          <Button
-            row="2"
-            v-show="!editable"
-            text="Update"
-            class="update"
-            @tap="toggleForm"
-            col="0"
-            colspan="2"
-          />
-          <GridLayout row="3" columns="*,*">
-            <Button v-show="editable" text="Save" class="save" @tap="saveProfile" col="0" />
-            <Button v-show="editable" text="Cancel" class="cancel" @tap="saveCancel" col="1" />
-          </GridLayout>
-        </GridLayout>
-        <!-- Picture -->
-        <Image
-          id="image"
-          :src="origprofile.profile_pic"
-          class="profile-picture"
-          v-bind:class="{'editable': editable }"
-          @tap="onProfilePictureTapped"
-        />
-      </GridLayout>
-    </StackLayout>
-  </Page>
+   <Page ref="page" actionBarHidden="true" backgroundSpanUnderStatusBar="true">
+        <StackLayout class="container">
+            <GridLayout class="action-bar" rows="*" columns="50,2*,50">
+                <Label col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'"/>
+                <Label col="1" row="0" class="header" text="Profile"/>               
+            </GridLayout>        
+            <GridLayout>
+              <GridLayout class="form-content" rows="auto,*,auto,auto" >
+                  <StackLayout class="top-border" row="0"/>
+                  <ScrollView row="1" class="fields-section">
+                      <StackLayout>
+                          <!-- Username -->
+                          <GridLayout  ios:columns="auto,*" android:rows="auto, auto" verticalAlignment="top">
+                              <Label text="Username" class="field-title" />
+                              <TextField v-bind:class="{ editable: editable }" id="username" :editable="editable" v-model="origprofile.name" class="field" ios:col="1" android:row="1" tap="onTextInputTapped" />
+                          </GridLayout>
+                          <StackLayout class="line"/>
+                          <!-- Profile Pic -->
+                          <GridLayout  ios:columns="auto,*" android:rows="auto, auto" verticalAlignment="top">
+                              <Label text="Profile Pic" class="field-title" />
+                              <TextField v-bind:class="{ editable: editable }" id="profile_pic" :editable="editable" v-model="origprofile.profile_pic" class="field" ios:col="1" android:row="1" tap="onTextInputTapped" />
+                          </GridLayout>
+                          <StackLayout class="line"/>
+                          <!-- Bio -->
+                          <StackLayout >
+                              <Label text="Bio" class="field-title" />
+                              <TextView v-bind:class="{ editable: editable }" id="bio" :editable="editable" v-model="origprofile.bio" android:hint="Add bio" ios:hint="Bio" class="field-multiline" tap="onTextInputTapped"/>
+                          </StackLayout>
+                          <StackLayout class="line"/>
+                      </StackLayout>
+                  </ScrollView>                  
+                  <Button row="2" v-show="!editable" text="Update" class="update" @tap="toggleForm" col="0" colspan="2"/>
+                  <GridLayout row="3" columns="*,*"  >
+                    <Button v-show="editable" text="Save" class="save" @tap="saveProfile" col="0"/>
+                   <Button v-show="editable" text="Cancel" class="cancel" @tap="saveCancel" col="1"/>            
+                  </GridLayout>                  
+             </GridLayout>
+             <!-- Picture -->
+             <Image id="image" :src="origprofile.profile_pic" class="profile-picture" v-bind:class="{'editable': editable }" @tap="onProfilePictureTapped"/>      
+            </GridLayout>
+        </StackLayout>
+    </Page>
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
 import firebase from "nativescript-plugin-firebase";
-import ProfilePicture from "./ProfilePicture.vue"
-
 var LoadingIndicator = require("nativescript-loading-indicator")
   .LoadingIndicator;
 var loader = new LoadingIndicator();
+import ProfilePicture from "./ProfilePicture.vue";
 export default {
   name: "profile-page",
   data() {
@@ -100,10 +58,10 @@ export default {
     };
   },
   components: {},
-  computed: {},
+  computed: {
+  },
   created() {
-    // this.origprofile = Object.assign({}, this.$store.state.profile);
-    this.origprofile = {};
+    this.origprofile = Object.assign({}, this.$store.state.profile);    
   },
   methods: {
     toggleForm() {
@@ -115,14 +73,13 @@ export default {
       }
     },
     saveCancel() {
-      // this.origprofile = Object.assign({}, this.$store.state.profile);
-      this.origprofile = {};
+      this.origprofile = Object.assign({}, this.$store.state.profile);
       this.editable = false;
     },
     saveProfile() {
-      //in case we updated profile pic and returned to this page
-      // this.origprofile.profile_pic = this.$store.state.profile.profile_pic;
-      this.origprofile.profile_pic = '';
+      //in case we updated profile pic and returned to this page from there      
+      this.origprofile.profile_pic = this.$store.state.profile.profile_pic
+      console.dir(this.origprofile);
       loader.show();
       const profDoc = firebase.firestore
         .collection("users")

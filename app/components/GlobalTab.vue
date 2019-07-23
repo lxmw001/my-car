@@ -1,22 +1,23 @@
 <template>
-  <StackLayout>
-    <ActionBar text="MyApp" :back="false" />
-    <StackLayout class="form">
-      <Image class="logo" src="~/assets/images/NativeScript-Vue.png" />
-      <Label class="header">Hello {{profile.name}}!</Label>
-      <Label class="header">Welcome to Global!</Label>
+    <StackLayout>
+        <ActionBar text="MyApp" :back="false"/>
+        <StackLayout class="form">            
+            <Image class="logo" src="~/assets/images/NativeScript-Vue.png" />
+            <Label class="header">Hello {{profile.name}}!</Label>            
+            <Label class="header">Welcome to Global!</Label>            
+        </StackLayout>
     </StackLayout>
-  </StackLayout>
 </template>
 
 <script>
 import ActionBar from "./ActionBar";
 import { mapState, mapGetters } from "vuex";
-
 export default {
   name: "local-tab",
-  components: { ActionBar },
-  computed: {...mapGetters(["profile"])},
+  components: {ActionBar},
+  computed: {
+    ...mapGetters(["profile"])    
+  },
 };
 </script>
 <style scoped>

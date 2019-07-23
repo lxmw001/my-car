@@ -1,23 +1,15 @@
 <template>
-  <StackLayout>
+<StackLayout>
     <GridLayout class="action-bar" rows="*" columns="50,2*,50,50,50">
-      <Label v-if="back" col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'" />
-      <Label col="1" row="0" class="header" :text="text" />
-      <Label col="2" row="0" class="fas" @tap="toggleSearch()" :text="'\uf002'" />
-      <Label col="3" row="0" class="fas" @tap="goSettings()" :text="'\uf013'" />
-      <Label col="4" row="0" class="fas" @tap="goProfile()" :text="'\uf007'" />
+        <Label v-if="back" col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'"/>
+        <Label col="1" row="0" class="header" :text="text"/>
+        <Label col="2" row="0" class="fas" @tap="toggleSearch()" :text="'\uf002'"/>
+        <Label col="3" row="0" class="fas" @tap="goSettings()" :text="'\uf013'"/>       
+        <Label col="4" row="0" class="fas" @tap="goProfile()" :text="'\uf007'"/>
     </GridLayout>
-    <SearchBar
-      v-if="searchbar"
-      hint="Search for.."
-      [text]="searchPhrase"
-      (textChange)="onTextChanged($event)"
-      (submit)="onSubmit($event)"
-      color="grey"
-      textFieldBackgroundColor="lightgrey"
-      textFieldHintColor="darkgrey"
-    ></SearchBar>
-  </StackLayout>
+     <SearchBar v-if="searchbar"  hint="Search for.." [text]="searchPhrase" (textChange)="onTextChanged($event)" (submit)="onSubmit($event)" 
+                color="grey" textFieldBackgroundColor="lightgrey" textFieldHintColor="darkgrey"></SearchBar>
+</StackLayout>
 </template>
 
 <script>
@@ -52,7 +44,7 @@ export default {
 </script>
 <style>
 .action-bar {
-  background-color: #90d2c5;
+  background-color: #90D2C5;
   color: #131426;
   font-weight: bold;
   font-size: 20;

@@ -3,8 +3,8 @@
         <StackLayout class="container">
             <GridLayout class="action-bar" rows="*" columns="50,2*,50">
                 <Label col="0" row="0" class="fas" @tap="$navigateBack()" :text="'\uf060'"/>
-                <Label col="1" row="0" class="header" text="Settings"/>
-            </GridLayout>
+                <Label col="1" row="0" class="header" text="Settings"/>               
+            </GridLayout>            
             <Button  text="Logout" class="logout" @tap="logoutApp()" />
         </StackLayout>
     </Page>

@@ -7,7 +7,7 @@ export default class AuthService extends BackendService {
     const createdUser = await firebase.createUser({
       email: user.email,
       password: user.password
-    })
+    });
     return await firebase.firestore.set("users", createdUser.uid, {});
   }
 
@@ -22,8 +22,8 @@ export default class AuthService extends BackendService {
       })
       .then(async firebaseUser => {
         backendService.token = firebaseUser.uid;
-        return firebaseUser
-      })
+        return firebaseUser;
+      });
   }
 
   async loginFacebook(user) {
@@ -38,7 +38,7 @@ export default class AuthService extends BackendService {
         return Promise.resolve(JSON.stringify(result));
       })
       .catch(error => {
-        console.log("Error logging in with Facebook")
+        console.log("Error logging in with Facebook");
         console.error(error);
         return Promise.reject(error);
       });
@@ -53,7 +53,7 @@ export default class AuthService extends BackendService {
         return Promise.resolve(JSON.stringify(result));
       })
       .catch(error => {
-        console.log("Error logging in with Facebook")
+        console.log("Error logging in with Facebook");
         console.error(error);
         return Promise.reject(error);
       });
@@ -62,7 +62,7 @@ export default class AuthService extends BackendService {
   async resetPassword(email) {
     return await firebase.resetPassword({
       email: email
-    })
+    });
   }
 
   async logout() {
